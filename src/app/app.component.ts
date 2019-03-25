@@ -14,6 +14,10 @@ export class AppComponent  {
   gridOptions = {
     stopEditingWhenGridLosesFocus: true,
     columnTypes: {
+      'textolumn': {},
+      'selectColumn': {
+        cellEditor: 'agRichSelectCellEditor'
+      },
       'amountColumn': {
         cellEditorFramework: AmountEditorComponent,
         valueFormatter: (params: ValueFormatterParams) => {
@@ -22,32 +26,31 @@ export class AppComponent  {
       }
     }
   }
-    columnDefs = [
-        {
-          headerName: 'Make',
-          field: 'make'
-        },
-        {
-          headerName: 'Model',
-          field: 'model',
-          width: 70,
-          editable: true,
-          cellEditor: 'agRichSelectCellEditor',
-                cellEditorParams: {
-                    values: [
-                        "Celica",
-                        "Mondeo",
-                        "Boxter",
-                        "Corolla"
-                    ]
-                }
-        },
-        {
-          headerName: 'Price',
-          field: 'price',
-          type: "amountColumn",
-          editable: true
+  columnDefs = [
+      {
+        headerName: 'Make',
+        field: 'make'
+      },
+      {
+        headerName: 'Model',
+        field: 'model',
+        type: 'selectColumn',
+        editable: true,
+        cellEditorParams: {
+            values: [
+              "Celica",
+              "Mondeo",
+              "Boxter",
+              "Corolla"
+            ]
         }
+      },
+      {
+        headerName: 'Price',
+        field: 'price',
+        type: "amountColumn",
+        editable: true
+      }
     ];
 
     rowData = [
