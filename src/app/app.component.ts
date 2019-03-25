@@ -16,7 +16,13 @@ export class AppComponent  {
     columnTypes: {
       'textolumn': {},
       'selectColumn': {
-        cellEditor: 'agRichSelectCellEditor'
+        cellEditor: 'agRichSelectCellEditor',
+        // valueFormatter: function(params) {
+        //   return this.carData[params.value];
+        // },
+        // valueParser: function(params) {
+        //   return this.carData[params.newValue].key;
+        // }
       },
       'amountColumn': {
         cellEditorFramework: AmountEditorComponent,
@@ -43,11 +49,7 @@ export class AppComponent  {
         type: 'selectColumn',
         editable: true,
         cellEditorParams: {
-            values: [
-              "Toyota",
-              "Honda",
-              "Nissan"
-            ]
+            //values: this.carData
         }
       },
       {
@@ -82,8 +84,15 @@ export class AppComponent  {
     ];
 
     rowData = [
-        { make: 'Toyota', model: 'Corolla', price: 35000, saleEndDate: new Date(), usedIndicator: 'Y' },
-        { make: 'Honda', model: 'Civic', price: 32000, saleEndDate: new Date(), usedIndicator: 'N' },
-        { make: 'Nissan', model: 'Sentra', price: 72000, saleEndDate: new Date(), usedIndicator: 'Y' }
+        { make: 'tyt', model: 'Corolla', price: 35000, saleEndDate: new Date(), usedIndicator: 'Y' },
+        { make: 'hnd', model: 'Civic', price: 32000, saleEndDate: new Date(), usedIndicator: 'N' },
+        { make: 'nss', model: 'Sentra', price: 72000, saleEndDate: new Date(), usedIndicator: 'Y' }
+    ];
+
+    carData = [
+     { key: "tyt", value: "Toyota" },
+     { key: "frd", value: "Ford" },
+     { key: "hnd", value: "Honda" },
+     { key: "nss", value: "Nissan" }
     ];
 }
