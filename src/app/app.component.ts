@@ -26,11 +26,11 @@ export class AppComponent  {
       },
       'checkboxColumn': {
         cellRenderer: (params: any) => {
-          return (params.Value === 'Y' ? '<b style="color: green">Yes</b>' : '<b style="color: red">No</b>');
+          return (params.value === 'Y' ? '<b style="color: green">Yes</b>' : '<b style="color: red">No</b>');
         }
       },
       'dateColumn': {
-        valueFormatter: (params: ValueFormatterParams) => {
+        valueFormatter: (params: any) => {
           return formatDate(params.value, 'yyyy-MM-dd', 'en');
         }
       }
