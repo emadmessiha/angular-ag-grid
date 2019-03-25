@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AmountEditorComponent } from './amount-editor.component';
+import { formatCurrency } from '@angular/common';
 
 @Component({
   selector: 'my-app',
@@ -10,11 +11,21 @@ export class AppComponent  {
   name = 'Angular';
   title = 'app';
 
+  gridOptions = {
+    stopEditingWhenGridLosesFocus: true,
+    columnTypes: {
+      'amountColumn': {
+        cellEditorFramework: AmountEditorComponent,
+        valueFormatter: (params: ValueFormatterParams) => {
+          return formatCurrency(params.value, 'en', '', '1.2-2');
+        }
+      }
+    }
+  }
     columnDefs = [
         {
           headerName: 'Make',
-          field: 'make',
-          width: 70
+          field: 'make'
         },
         {
           headerName: 'Model',
@@ -34,10 +45,8 @@ export class AppComponent  {
         {
           headerName: 'Price',
           field: 'price',
-          type: "numericColumn",
-          cellEditorFramework: AmountEditorComponent,
-          editable: true,
-          width: 90
+          type: "amountColumn",
+          editable: true
         }
     ];
 

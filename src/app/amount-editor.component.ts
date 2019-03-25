@@ -1,10 +1,11 @@
 import {AfterViewInit, Component, ViewChild, ViewContainerRef} from "@angular/core";
 
 import {ICellEditorAngularComp} from "ag-grid-angular";
+import { formatNumber } from '@angular/common';
 
 @Component({
     selector: 'amount-editor',
-    template: `<input #input [class]="cssClass" (keydown)="onKeyDown($event)" [(ngModel)]="value" style="width: 100%; border: none; text-align: right;">`
+    template: `<input #input [class]="cssClass" (keydown)="onKeyDown($event)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;">`
 })
 export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewInit {
     private params: any;
@@ -23,7 +24,7 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
     }
 
     getValue(): any {
-        return this.value;
+        return (Math.round(this.value * 100) / 100).toFixed(2);
     }
 
     // isCancelBeforeStart(): boolean {
@@ -38,7 +39,7 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
 
     onKeyDown(event): void {
         if (!this.isKeyPressedNumeric(event)) {
-          this.cssClass = this.value > 100000 ? 'error-field' : '';
+          this.cssClass = (this.isCharNumeric(this.value) && (this.value > 100000)) ? 'error-field' : '';
         }
     }
 

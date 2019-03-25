@@ -6,12 +6,23 @@ import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { AmountEditorComponent } from './amount-editor.component';
+import 'ag-grid-enterprise';
 
 @NgModule({
-  imports: [ BrowserModule, FormsModule, AgGridModule.withComponents([
+  imports: [ 
+    BrowserModule,
+    FormsModule,
+    AgGridModule.withComponents([
+      AmountEditorComponent
+    ])
+  ],
+  declarations: [
+    AppComponent,
+    HelloComponent,
     AmountEditorComponent
-  ]) ],
-  declarations: [ AppComponent, HelloComponent, AmountEditorComponent ],
-  bootstrap:    [ AppComponent ]
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }
