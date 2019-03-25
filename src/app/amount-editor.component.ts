@@ -4,44 +4,41 @@ import {ICellEditorAngularComp} from "ag-grid-angular";
 
 @Component({
     selector: 'amount-editor',
-    template: `<input #input [class]="getCssClass()" (keydown)="onKeyDown($event)" [(ngModel)]="value" style="width: 100%; border: none; text-align: right;">`
+    template: `<input #input [class]="cssClass" (keydown)="onKeyDown($event)" [(ngModel)]="value" style="width: 100%; border: none; text-align: right;">`
 })
 export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewInit {
     private params: any;
     public value: number;
     private cancelBeforeStart: boolean = false;
+    public cssClass: string;
 
     @ViewChild('input', {read: ViewContainerRef}) public input;
-
-    getCssClass(): string {
-      return this.value > 100000 ? 'error-field' : '';
-    }
 
     agInit(params: any): void {
         this.params = params;
         this.value = this.params.value;
 
         // only start edit if key pressed is a number, not a letter
-        this.cancelBeforeStart = params.charPress && ('1234567890'.indexOf(params.charPress) < 0);
+        // this.cancelBeforeStart = params.charPress && ('1234567890'.indexOf(params.charPress) < 0);
     }
 
     getValue(): any {
         return this.value;
     }
 
-    isCancelBeforeStart(): boolean {
-        return this.cancelBeforeStart;
-    }
+    // isCancelBeforeStart(): boolean {
+    //     return this.cancelBeforeStart;
+    // }
 
     // will reject the number if it greater than 1,000,000
     // not very practical, but demonstrates the method.
-    isCancelAfterEnd(): boolean {
-        return this.value > 1000000;
-    };
+    // isCancelAfterEnd(): boolean {
+    //     return this.value > 1000000;
+    // };
 
     onKeyDown(event): void {
         if (!this.isKeyPressedNumeric(event)) {
-            // if (event.preventDefault) event.preventDefault();
+          this.cssClass = this.value > 100000 ? 'error-field' : '';
         }
     }
 
