@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AmountEditorComponent } from './amount-editor.component';
-import { formatCurrency } from '@angular/common';
+import { formatCurrency, formatDate } from '@angular/common';
 
 @Component({
   selector: 'my-app',
@@ -20,8 +20,18 @@ export class AppComponent  {
       },
       'amountColumn': {
         cellEditorFramework: AmountEditorComponent,
-        valueFormatter: (params: ValueFormatterParams) => {
+        valueFormatter: (params: any) => {
           return formatCurrency(params.value, 'en', '', '1.2-2');
+        }
+      },
+      'checkboxColumn': {
+        cellRenderer: (params: any) => {
+          return (params.Value === 'Y' ? '<b style="color: green">Yes</b>' : '<b style="color: red">No</b>');
+        }
+      },
+      'dateColumn': {
+        valueFormatter: (params: ValueFormatterParams) => {
+          return formatDate(params.value, 'yyyy-MM-dd', 'en');
         }
       }
     }
@@ -29,7 +39,16 @@ export class AppComponent  {
   columnDefs = [
       {
         headerName: 'Make',
-        field: 'make'
+        field: 'make',
+        type: 'selectColumn',
+        editable: true,
+        cellEditorParams: {
+            values: [
+              "Toyota",
+              "Honda",
+              "Nissan"
+            ]
+        }
       },
       {
         headerName: 'Model',
@@ -38,10 +57,9 @@ export class AppComponent  {
         editable: true,
         cellEditorParams: {
             values: [
-              "Celica",
-              "Mondeo",
-              "Boxter",
-              "Corolla"
+              "Corolla",
+              "Civic",
+              "Sentra"
             ]
         }
       },
@@ -50,12 +68,22 @@ export class AppComponent  {
         field: 'price',
         type: "amountColumn",
         editable: true
+      },
+      {
+        headerName: 'Sale end date',
+        field: 'saleEndDate',
+        type: 'dateColumn'
+      },
+      {
+        headerName: 'Used?',
+        field: 'usedIndicator',
+        type: 'checkboxColumn'
       }
     ];
 
     rowData = [
-        { make: 'Toyota', model: 'Celica', price: 35000 },
-        { make: 'Ford', model: 'Mondeo', price: 32000 },
-        { make: 'Porsche', model: 'Boxter', price: 72000 }
+        { make: 'Toyota', model: 'Corolla', price: 35000, saleEndDate: new Date(), usedIndicator: 'Y' },
+        { make: 'Honda', model: 'Civic', price: 32000, saleEndDate: new Date(), usedIndicator: 'N' },
+        { make: 'Nissan', model: 'Sentra', price: 72000, saleEndDate: new Date(), usedIndicator: 'Y' }
     ];
 }
