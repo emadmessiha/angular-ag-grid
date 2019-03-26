@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AmountEditorComponent } from './amount-editor.component';
 import { formatCurrency, formatDate } from '@angular/common';
+import { Validators } from '@angular/forms';
+import { MyValidators } from './validators';
 
 @Component({
   selector: 'my-app',
@@ -70,7 +72,12 @@ export class AppComponent  {
         headerName: 'Price',
         field: 'price',
         type: "amountColumn",
-        editable: true
+        editable: true,
+        cellEditorParams: {
+          validators: [
+            MyValidators.AmountRangeValidator(1000, 100000)
+          ]
+        }
       },
       {
         headerName: 'Sale end date',

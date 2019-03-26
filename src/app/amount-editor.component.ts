@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, ViewChild, ViewContainerRef} from "@angular/core";
-
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 import {ICellEditorAngularComp} from "ag-grid-angular";
 import { formatNumber } from '@angular/common';
 
 @Component({
     selector: 'amount-editor',
-    template: `<input #input [class]="cssClass" (keydown)="onKeyDown($event)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;">`
+    template: `<input #input type="number" [class]="cssClass" (keydown)="onKeyDown($event)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;">`
 })
 export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewInit {
     private params: any;
@@ -38,9 +38,19 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
     // };
 
     onKeyDown(event): void {
-        if (!this.isKeyPressedNumeric(event)) {
-          this.cssClass = (this.isCharNumeric(this.value) && (this.value > 100000)) ? 'error-field' : '';
+      if (this.params.validators) {
+        if (this.params.validators.constructor === Array) {
+          this.params.validators.forEach((func: ValidatorFn) => {
+            const validationResult = func(this.input);
+            if (validationResult) {
+              console.log(validationResult);
+            }
+          });
         }
+      }
+      if (!this.isKeyPressedNumeric(event)) {
+        this.cssClass = (this.isCharNumeric(this.value) && (this.value > 100000)) ? 'error-field' : '';
+      }
     }
 
     // dont use afterGuiAttached for post gui events - hook intthiso ngAfterViewInit instead for this
