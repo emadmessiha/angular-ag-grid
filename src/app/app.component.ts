@@ -16,13 +16,7 @@ export class AppComponent  {
     columnTypes: {
       'textolumn': {},
       'selectColumn': {
-        cellEditor: 'agRichSelectCellEditor',
-        // valueFormatter: function(params) {
-        //   return this.carData[params.value];
-        // },
-        // valueParser: function(params) {
-        //   return this.carData[params.newValue].key;
-        // }
+        cellEditor: 'agRichSelectCellEditor'
       },
       'amountColumn': {
         cellEditorFramework: AmountEditorComponent,
@@ -49,7 +43,11 @@ export class AppComponent  {
         type: 'selectColumn',
         editable: true,
         cellEditorParams: {
-            //values: this.carData
+            values: [
+              "Toyota",
+              "Honda",
+              "Nissan"
+            ]
         }
       },
       {
@@ -57,12 +55,15 @@ export class AppComponent  {
         field: 'model',
         type: 'selectColumn',
         editable: true,
-        cellEditorParams: {
-            values: [
+        cellEditorParams: (params) => {
+            const returnParams = {
+              values: [
               "Corolla",
               "Civic",
               "Sentra"
-            ]
+            ]};
+
+            return returnParams;
         }
       },
       {
@@ -84,15 +85,8 @@ export class AppComponent  {
     ];
 
     rowData = [
-        { make: 'tyt', model: 'Corolla', price: 35000, saleEndDate: new Date(), usedIndicator: 'Y' },
-        { make: 'hnd', model: 'Civic', price: 32000, saleEndDate: new Date(), usedIndicator: 'N' },
-        { make: 'nss', model: 'Sentra', price: 72000, saleEndDate: new Date(), usedIndicator: 'Y' }
-    ];
-
-    carData = [
-     { key: "tyt", value: "Toyota" },
-     { key: "frd", value: "Ford" },
-     { key: "hnd", value: "Honda" },
-     { key: "nss", value: "Nissan" }
+        { make: 'Toyota', model: 'Corolla', price: 35000, saleEndDate: new Date(), usedIndicator: 'Y' },
+        { make: 'Honda', model: 'Civic', price: 32000, saleEndDate: new Date(), usedIndicator: 'N' },
+        { make: 'Nissan', model: 'Sentra', price: 72000, saleEndDate: new Date(), usedIndicator: 'Y' }
     ];
 }
