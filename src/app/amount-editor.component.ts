@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, ViewChild, ViewContainerRef} from "@angular/core";
+import { AfterViewInit, Component, ViewChild, ViewContainerRef } from "@angular/core";
 import { AbstractControl, ValidatorFn } from '@angular/forms';
-import {ICellEditorAngularComp} from "ag-grid-angular";
+import { ICellEditorAngularComp } from "ag-grid-angular";
 import { formatNumber } from '@angular/common';
 
 @Component({
@@ -41,6 +41,7 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
       if (this.params.validators) {
         if (this.params.validators.constructor === Array) {
           this.params.validators.forEach((func: ValidatorFn) => {
+            console.log(this.input);
             const validationResult = func(this.input);
             if (validationResult) {
               console.log(validationResult);

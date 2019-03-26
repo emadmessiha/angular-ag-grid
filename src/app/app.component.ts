@@ -75,7 +75,8 @@ export class AppComponent  {
         editable: true,
         cellEditorParams: {
           validators: [
-            MyValidators.AmountRangeValidator(1000, 100000)
+            Validators.min(1000),
+            Validators.max(100000)
           ]
         }
       },
