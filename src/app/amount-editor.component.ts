@@ -42,12 +42,14 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
     // };
 
     onKeyDown(event): void {
+      this.editorControl.setValue(this.input.element.nativeElement.value);
+      this.editorControl.updateValueAndValidity();
       if (this.editorControl.invalid) {
         this.cssClass = 'error-field';
       }
-      if (!this.isKeyPressedNumeric(event)) {
-        this.cssClass = (this.isCharNumeric(this.value) && (this.value > 100000)) ? 'error-field' : '';
-      }
+      // if (!this.isKeyPressedNumeric(event)) {
+      //   this.cssClass = (this.isCharNumeric(this.value) && (this.value > 100000)) ? 'error-field' : '';
+      // }
     }
 
     // dont use afterGuiAttached for post gui events - hook intthiso ngAfterViewInit instead for this
