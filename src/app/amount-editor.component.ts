@@ -5,7 +5,7 @@ import { formatNumber } from '@angular/common';
 
 @Component({
     selector: 'amount-editor',
-    template: `<input #input type="number" [class]="cssClass" (keydown)="onKeyDown($event)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;">`
+    template: `<input #input type="number" [class]="cssClass" (keyup)="onKeyUp($event)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;">`
 })
 export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewInit {
     private params: any;
@@ -41,11 +41,13 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
     //     return this.value > 1000000;
     // };
 
-    onKeyDown(event): void {
+    onKeyUp(event): void {
       this.editorControl.setValue(this.input.element.nativeElement.value);
       this.editorControl.updateValueAndValidity();
       if (this.editorControl.invalid) {
         this.cssClass = 'error-field';
+      } else {
+        this.cssClass = '';
       }
       // if (!this.isKeyPressedNumeric(event)) {
       //   this.cssClass = (this.isCharNumeric(this.value) && (this.value > 100000)) ? 'error-field' : '';
