@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ViewChild, ViewContainerRef } from "@angular/core";
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormControl, ValidatorFn } from '@angular/forms';
 import { ICellEditorAngularComp } from "ag-grid-angular";
 import { formatNumber } from '@angular/common';
 
@@ -12,12 +12,16 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
     public value: number;
     private cancelBeforeStart: boolean = false;
     public cssClass: string;
+    public editorControl: FormControl;
 
     @ViewChild('input', {read: ViewContainerRef}) public input;
 
     agInit(params: any): void {
         this.params = params;
         this.value = this.params.value;
+        this.editorControl = new FormControl();
+        this.editorControl.setValidators(this.params.validators);
+        this.editorControl.setValue(this.getValue());
 
         // only start edit if key pressed is a number, not a letter
         // this.cancelBeforeStart = params.charPress && ('1234567890'.indexOf(params.charPress) < 0);
@@ -38,16 +42,8 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
     // };
 
     onKeyDown(event): void {
-      if (this.params.validators) {
-        if (this.params.validators.constructor === Array) {
-          this.params.validators.forEach((func: ValidatorFn) => {
-            console.log(this.input);
-            const validationResult = func(this.input);
-            if (validationResult) {
-              console.log(validationResult);
-            }
-          });
-        }
+      if (this.editorControl.invalid) {
+        this.cssClass = 'error-field';
       }
       if (!this.isKeyPressedNumeric(event)) {
         this.cssClass = (this.isCharNumeric(this.value) && (this.value > 100000)) ? 'error-field' : '';
