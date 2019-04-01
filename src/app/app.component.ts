@@ -38,6 +38,12 @@ export class AppComponent  {
       }
     }
   }
+  carModels = [
+      { key: 0, name: ">> Select" },
+      { key: 1, name: "Corolla" },
+      { key: 2, name: "Civic" },
+      { key: 3, name: "Sentra" }
+  ];
   columnDefs = [
       {
         headerName: 'Make',
@@ -58,14 +64,17 @@ export class AppComponent  {
         field: 'model',
         type: 'selectColumn',
         editable: true,
+        valueFormatter: (params) => {
+          return this.carModels.filter((carModel) => {
+            return carModel.key === params.value;
+          })[0].name;
+        },
         cellEditorParams: (params) => {
             const returnParams = {
-              values: [
-                ">> Select",
-                "Corolla",
-                "Civic",
-                "Sentra"
-            ]};
+              values: this.carModels.map((carModel) => {
+                return carModel.key;
+              })
+            };
 
             return returnParams;
         }
@@ -95,8 +104,12 @@ export class AppComponent  {
     ];
 
     rowData = [
-        { make: 'Toyota', model: 'Corolla', price: 35000, saleEndDate: new Date(), usedIndicator: 'Y' },
-        { make: 'Honda', model: 'Civic', price: 32000, saleEndDate: new Date(), usedIndicator: 'N' },
-        { make: 'Nissan', model: 'Sentra', price: 72000, saleEndDate: new Date(), usedIndicator: 'Y' }
+        { make: 'Toyota', model: 1, price: 35000, saleEndDate: new Date(), usedIndicator: 'Y' },
+        { make: 'Honda', model: 2, price: 32000, saleEndDate: new Date(), usedIndicator: 'N' },
+        { make: 'Nissan', model: 3, price: 72000, saleEndDate: new Date(), usedIndicator: 'Y' }
     ];
+
+    saveClick = function() {
+      console.log(this.rowData);
+    }
 }
