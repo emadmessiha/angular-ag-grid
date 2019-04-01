@@ -16,7 +16,7 @@ export class AppComponent  {
   gridOptions = {
     stopEditingWhenGridLosesFocus: true,
     columnTypes: {
-      'textolumn': {},
+      'textColumn': {},
       'selectColumn': {
         cellEditor: 'agRichSelectCellEditor'
       },
