@@ -55,7 +55,9 @@ export class AppComponent  {
         headerName: 'Make',
         field: 'make',
         type: 'selectColumn',
-        editable: true,
+        editable: (params) => {
+          return !params.node.isRowPinned();
+        },
         cellEditorParams: {
             values: [
               ">> Select",
