@@ -15,6 +15,12 @@ export class AppComponent  {
 
   gridOptions = {
     stopEditingWhenGridLosesFocus: true,
+    rowSelection: 'single',
+    defaultColDef: {
+      editable: (params) => {
+        return !params.node.isRowPinned();
+      }
+    },
     columnTypes: {
       'textColumn': {},
       'selectColumn': {
@@ -107,6 +113,10 @@ export class AppComponent  {
         { make: 'Toyota', model: 1, price: 35000, saleEndDate: new Date(), usedIndicator: 'Y' },
         { make: 'Honda', model: 2, price: 32000, saleEndDate: new Date(), usedIndicator: 'N' },
         { make: 'Nissan', model: 3, price: 72000, saleEndDate: new Date(), usedIndicator: 'Y' }
+    ];
+
+    pinnedRowData = [
+      { make: 'Total', model: 0, price: 0, saleEndDate: null, usedIndicator: '' }
     ];
 
     saveClick = function() {
