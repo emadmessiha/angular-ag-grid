@@ -46,6 +46,7 @@ export class AppComponent  {
         editable: true,
         cellEditorParams: {
             values: [
+              ">> Select",
               "Toyota",
               "Honda",
               "Nissan"
@@ -60,9 +61,10 @@ export class AppComponent  {
         cellEditorParams: (params) => {
             const returnParams = {
               values: [
-              "Corolla",
-              "Civic",
-              "Sentra"
+                ">> Select",
+                "Corolla",
+                "Civic",
+                "Sentra"
             ]};
 
             return returnParams;
