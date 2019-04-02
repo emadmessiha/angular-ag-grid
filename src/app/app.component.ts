@@ -16,7 +16,16 @@ export class AppComponent  {
   gridOptions = {
     stopEditingWhenGridLosesFocus: true,
     rowSelection: 'single',
+    context: {
+      invalidCells: new Map()
+    },
     defaultColDef: {
+      cellClass: (params) => {
+        console.log(params.context);
+        const cellKey = params.rowIndex + '' + params.colDef.field;
+        console.log(cellKey);
+        return params.context ? (params.context.invalidCells.get(cellKey) === true ? 'error-field' : '') : '';
+      },
       editable: (params) => {
         return !params.node.isRowPinned();
       }

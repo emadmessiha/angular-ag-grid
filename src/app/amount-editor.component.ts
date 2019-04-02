@@ -13,6 +13,7 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
     private cancelBeforeStart: boolean = false;
     public cssClass: string;
     public editorControl: FormControl;
+    public cellKey: string;
 
     @ViewChild('input', {read: ViewContainerRef}) public input;
 
@@ -22,7 +23,7 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
         this.editorControl = new FormControl();
         this.editorControl.setValidators(this.params.validators);
         this.editorControl.setValue(this.getValue());
-
+        this.cellKey = this.params.rowIndex + this.params.column.colId;
         // only start edit if key pressed is a number, not a letter
         // this.cancelBeforeStart = params.charPress && ('1234567890'.indexOf(params.charPress) < 0);
     }
@@ -45,8 +46,10 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
       this.editorControl.setValue(this.input.element.nativeElement.value);
       this.editorControl.updateValueAndValidity();
       if (this.editorControl.invalid) {
+        this.params.context.invalidCells.set(this.cellKey, true);
         this.cssClass = 'error-field';
       } else {
+        this.params.context.invalidCells.delete(this.cellKey);
         this.cssClass = '';
       }
       // if (!this.isKeyPressedNumeric(event)) {
