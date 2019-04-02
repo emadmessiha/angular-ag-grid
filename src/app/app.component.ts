@@ -22,10 +22,7 @@ export class AppComponent  {
       cellClassRules: {
         'error-field': (params) => {
           const cellKey = params.rowIndex + '' + params.colDef.field;
-          // Debug statment
-          if (cellKey === '0price') { 
-            console.log(params.context.invalidCells.get(cellKey));
-          }
+          
           if (params.context) {
             if (params.context.invalidCells !== undefined) {
               return (params.context.invalidCells.get(cellKey) !== undefined);
