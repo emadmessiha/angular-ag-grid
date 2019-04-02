@@ -19,18 +19,31 @@ export class AppComponent  {
       invalidCells: new Map()
     },
     defaultColDef: {
-      cellClassRules: {
-        'error-field': (params) => {
-          const cellKey = params.rowIndex + '' + params.colDef.field;
-          
-          if (params.context) {
-            if (params.context.invalidCells !== undefined) {
-              return (params.context.invalidCells.get(cellKey) !== undefined);
-            }
+      cellStyle: function(params) {
+        const cellKey = params.rowIndex + '' + params.colDef.field;
+        const errorCellStyle = { borderColor: 'red' };
+
+        
+
+        if (params.context) {
+          if (params.context.invalidCells !== undefined) {
+            return (params.context.invalidCells.get(cellKey) !== undefined) ? errorCellStyle : null;
           }
-          return false;
         }
+        return null;
       },
+      // cellClassRules: {
+      //   'error-field': (params) => {
+      //     const cellKey = params.rowIndex + '' + params.colDef.field;
+          
+      //     if (params.context) {
+      //       if (params.context.invalidCells !== undefined) {
+      //         return (params.context.invalidCells.get(cellKey) !== undefined);
+      //       }
+      //     }
+      //     return false;
+      //   }
+      // },
       editable: (params) => {
         return !params.node.isRowPinned();
       }
@@ -42,6 +55,9 @@ export class AppComponent  {
       },
       'amountColumn': {
         cellEditorFramework: AmountEditorComponent,
+        cellStyle: {
+          align: 'right'
+        },
         valueFormatter: (params: any) => {
           return formatCurrency(params.value, 'en', '', '1.2-2');
         }
