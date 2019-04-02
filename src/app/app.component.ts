@@ -20,11 +20,20 @@ export class AppComponent  {
       invalidCells: new Map()
     },
     defaultColDef: {
-      cellClass: (params) => {
-        console.log(params.context);
-        const cellKey = params.rowIndex + '' + params.colDef.field;
-        console.log(cellKey);
-        return params.context ? (params.context.invalidCells.get(cellKey) === true ? 'error-field' : '') : '';
+      cellClassRules: {
+        'error-field': (params) => {
+          const cellKey = params.rowIndex + '' + params.colDef.field;
+          // Debug statment
+          if (cellKey === '0price') { 
+            console.log(params.context.invalidCells.get(cellKey));
+          }
+          if (params.context) {
+            if (params.context.invalidCells !== undefined) {
+              return (params.context.invalidCells.get(cellKey) === undefined ? '' : 'error-field');
+            }
+          }
+          return '';
+        }
       },
       editable: (params) => {
         return !params.node.isRowPinned();
