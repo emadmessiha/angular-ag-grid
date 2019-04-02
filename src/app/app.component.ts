@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AmountEditorComponent } from './amount-editor.component';
 import { formatCurrency, formatDate } from '@angular/common';
 import { Validators } from '@angular/forms';
-import { MyValidators } from './validators';
 
 @Component({
   selector: 'my-app',
