@@ -28,10 +28,10 @@ export class AppComponent  {
           }
           if (params.context) {
             if (params.context.invalidCells !== undefined) {
-              return (params.context.invalidCells.get(cellKey) === undefined ? '' : 'error-field');
+              return (params.context.invalidCells.get(cellKey) !== undefined);
             }
           }
-          return '';
+          return false;
         }
       },
       editable: (params) => {
