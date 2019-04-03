@@ -5,7 +5,9 @@ import { formatNumber } from '@angular/common';
 // https://ng-bootstrap.github.io/#/components/tooltip/examples
 @Component({
     selector: 'amount-editor',
-    template: `<input #input type="number" [class]="cssClass" (keyup)="onKeyUp($event)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;" autocomplete="off">`
+    template: `
+    <ng-template #tooltipContent><ul><li>Hello, <b>{{tooltipMessage}}</b>!</li></ul></ng-template>
+    <input #input type="number" triggers="manual" autoClose="false" placement="top" ngbTooltip="tooltipContent" #t1="ngbTooltip" [class]="cssClass" (keyup)="onKeyUp($event, t1)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;" autocomplete="off">`
 })
 export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewInit {
     private params: any;
@@ -14,6 +16,7 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
     public cssClass: string;
     public editorControl: FormControl;
     public cellKey: string;
+    public tooltipMessage: string = 'world';
 
     @ViewChild('input', {read: ViewContainerRef}) public input;
 
@@ -30,23 +33,30 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
         return (Math.round(this.value * 100) / 100).toFixed(2);
     }
 
-    onKeyUp(event): void {
+    isValid(inputValue: string): boolean {
+      const parsedValue: number = parseFloat(inputValue);
+      if (isNaN(parsedValue)) {
+        return false;
+      } else {
+        this.editorControl.setValue(inputValue);
+        this.editorControl.updateValueAndValidity();
+        return (this.editorControl.valid);
+      }
+      return true;
+    }
+
+    onKeyUp(event, tooltip): void {
       const nativeElement = this.input.element.nativeElement;
       const numberValue: string = this.input.element.nativeElement.value;
-      const parsedValue: number = parseFloat(numberValue);
-      if (isNaN(parsedValue)) {
+      console.log(tooltip);
+      if (this.isValid(numberValue)) {
+        this.params.context.invalidCells.delete(this.cellKey);
+        this.cssClass = '';
+        tooltip.close();
+      } else {
         this.params.context.invalidCells.set(this.cellKey, true);
         this.cssClass = 'error-field';
-      } else {
-        this.editorControl.setValue(numberValue);
-        this.editorControl.updateValueAndValidity();
-        if (this.editorControl.invalid) {
-          this.params.context.invalidCells.set(this.cellKey, true);
-          this.cssClass = 'error-field';
-        } else {
-          this.params.context.invalidCells.delete(this.cellKey);
-          this.cssClass = '';
-        }
+        tooltip.open();
       }
     }
 

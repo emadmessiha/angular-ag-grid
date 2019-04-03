@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ViewContainerRef } from '@angular/core';
 import { AmountEditorComponent } from './amount-editor.component';
 import { formatCurrency, formatDate } from '@angular/common';
 import { Validators } from '@angular/forms';
@@ -11,6 +11,17 @@ import { Validators } from '@angular/forms';
 export class AppComponent  {
   name = 'Angular';
   title = 'app';
+  @ViewChild('tooltipInput', {read: ViewContainerRef}) public tooltipInput;
+
+  onKeyUp = (event, tooltip) => {
+    const nativeElement = this.tooltipInput.element.nativeElement;
+    const textValue: string = this.tooltipInput.element.nativeElement.value;
+    if (textValue === 'test') {
+      tooltip.open();
+    } else {
+      tooltip.close();
+    }
+  }
 
   gridOptions = {
     stopEditingWhenGridLosesFocus: true,

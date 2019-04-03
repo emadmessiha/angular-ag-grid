@@ -2,6 +2,10 @@
 <p>
   Start editing to see some magic happen :)
 </p>
+<p>
+  Test tooltop (enter the word 'test' to trigger the tooltip):
+  <input #tooltipInput triggers="manual" autoClose="false" placement="top" ngbTooltip="tooltipContent" #tt="ngbTooltip" (keyup)="onKeyUp($event, tt)" autocomplete="off"/>
+</p>
 <ag-grid-angular 
     style="width: 100%; height: 500px;" 
     [rowData]="rowData" 
