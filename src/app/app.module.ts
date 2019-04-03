@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { AmountEditorComponent } from './amount-editor.component';
+import { TippyModule } from 'ng-tippy';
 import 'ag-grid-enterprise';
 
 @NgModule({
@@ -14,7 +15,8 @@ import 'ag-grid-enterprise';
     FormsModule,
     AgGridModule.withComponents([
       AmountEditorComponent
-    ])
+    ]),
+    TippyModule
   ],
   declarations: [
     AppComponent,

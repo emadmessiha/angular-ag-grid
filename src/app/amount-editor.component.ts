@@ -5,7 +5,7 @@ import { formatNumber } from '@angular/common';
 
 @Component({
     selector: 'amount-editor',
-    template: `<input #input type="number" [class]="cssClass" (keyup)="onKeyUp($event)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;">`
+    template: `<input #input type="number" [class]="cssClass" (keyup)="onKeyUp($event)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;" autocomplete="off">`
 })
 export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewInit {
     private params: any;
@@ -14,6 +14,13 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
     public cssClass: string;
     public editorControl: FormControl;
     public cellKey: string;
+    public tooltipOptions: any = {
+      arrow: true,
+      allowHTML: true,
+      theme: 'light',
+      trigger: 'focus',
+      content: 'default content'
+    };
 
     @ViewChild('input', {read: ViewContainerRef}) public input;
 
@@ -31,6 +38,7 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
     }
 
     onKeyUp(event): void {
+      const nativeElement = this.input.element.nativeElement;
       const numberValue: string = this.input.element.nativeElement.value;
       const parsedValue: number = parseFloat(numberValue);
       if (isNaN(parsedValue)) {

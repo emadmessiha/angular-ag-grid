@@ -22,10 +22,11 @@ export class AppComponent  {
       cellClassRules: {
         'error-cell': (params) => {
           const cellKey = params.rowIndex + '' + params.colDef.field;
-          
-          if (params.context) {
-            if (params.context.invalidCells !== undefined) {
-              return (params.context.invalidCells.get(cellKey) !== undefined);
+          if (!params.node.isRowPinned()) {
+            if (params.context) {
+              if (params.context.invalidCells !== undefined) {
+                return (params.context.invalidCells.get(cellKey) !== undefined);
+              }
             }
           }
           return false;
