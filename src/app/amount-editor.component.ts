@@ -14,13 +14,6 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
     public cssClass: string;
     public editorControl: FormControl;
     public cellKey: string;
-    public tooltipOptions: any = {
-      arrow: true,
-      allowHTML: true,
-      theme: 'light',
-      trigger: 'focus',
-      content: 'default content'
-    };
 
     @ViewChild('input', {read: ViewContainerRef}) public input;
 
