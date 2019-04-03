@@ -2,7 +2,15 @@
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
 
+.amount-header {
+  text-align: right;
+}
+
 .error-field {
-  border-style: double;
-  border-color: red;
+  color: red;
+}
+
+.error-cell {
+  box-shadow: 0px 0px 2px 2px red;
+  z-index: 1000;
 }

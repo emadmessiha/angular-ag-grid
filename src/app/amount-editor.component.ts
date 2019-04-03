@@ -31,14 +31,21 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
     }
 
     onKeyUp(event): void {
-      this.editorControl.setValue(this.input.element.nativeElement.value);
-      this.editorControl.updateValueAndValidity();
-      if (this.editorControl.invalid) {
+      const numberValue: string = this.input.element.nativeElement.value;
+      const parsedValue: number = parseFloat(numberValue);
+      if (isNaN(parsedValue)) {
         this.params.context.invalidCells.set(this.cellKey, true);
         this.cssClass = 'error-field';
       } else {
-        this.params.context.invalidCells.delete(this.cellKey);
-        this.cssClass = '';
+        this.editorControl.setValue(numberValue);
+        this.editorControl.updateValueAndValidity();
+        if (this.editorControl.invalid) {
+          this.params.context.invalidCells.set(this.cellKey, true);
+          this.cssClass = 'error-field';
+        } else {
+          this.params.context.invalidCells.delete(this.cellKey);
+          this.cssClass = '';
+        }
       }
     }
 
@@ -48,9 +55,5 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
             this.input.element.nativeElement.focus();
             this.input.element.nativeElement.select();
         })
-    }
-
-    private isCharNumeric(charStr): boolean {
-        return !!/\d/.test(charStr);
     }
 }
