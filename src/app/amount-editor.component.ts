@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ViewChild, ViewContainerRef } from "@angular/
 import { AbstractControl, FormControl, ValidatorFn } from '@angular/forms';
 import { ICellEditorAngularComp } from "ag-grid-angular";
 import { formatNumber } from '@angular/common';
-
+// https://ng-bootstrap.github.io/#/components/tooltip/examples
 @Component({
     selector: 'amount-editor',
     template: `<input #input type="number" [class]="cssClass" (keyup)="onKeyUp($event)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;" autocomplete="off">`
