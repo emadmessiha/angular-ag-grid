@@ -50,7 +50,36 @@ export class AppComponent  {
     columnTypes: {
       'textColumn': {},
       'selectColumn': {
-        cellEditor: 'agRichSelectCellEditor'
+        cellEditor: 'agRichSelectCellEditor',
+        valueFormatter: (params) => {
+          const currentColDef = params.colDef;
+          let editorParams = null;
+          if (currentColDef !== undefined || currentColDef !== null) {
+            editorParams = currentColDef.cellEditorParams;
+          }
+          const dropDownItems = (editorParams ? (editorParams.values ? editorParams.values : []) : []);
+          const item = dropDownItems.filter((dropDownItem) => {
+            return dropDownItem.key === params.value;
+          })[0];
+          if (item) {
+            return item.name;
+          }
+          return '';
+        },
+        valueParser: (params) => {
+          const currentColDef = params.colDef;
+          let editorParams = null;
+          if (currentColDef !== undefined || currentColDef !== null) {
+            editorParams = currentColDef.cellEditorParams;
+          }
+          const dropDownItems = (editorParams ? (editorParams.values ? editorParams.values : []) : []);
+          const returnParams = {
+            values: dropDownItems.map((dropDownItem) => {
+              return (dropDownItem.key ? dropDownItem.key : dropDownItem);
+            })
+          };
+          return returnParams;
+        }
       },
       'amountColumn': {
         cellEditorFramework: AmountEditorComponent,
@@ -74,12 +103,7 @@ export class AppComponent  {
       }
     }
   }
-  carModels = [
-      { key: 0, name: ">> Select" },
-      { key: 1, name: "Corolla" },
-      { key: 2, name: "Civic" },
-      { key: 3, name: "Sentra" }
-  ];
+
   columnDefs = [
       {
         headerName: 'Make',
@@ -90,10 +114,10 @@ export class AppComponent  {
         },
         cellEditorParams: {
             values: [
-              ">> Select",
-              "Toyota",
-              "Honda",
-              "Nissan"
+                { key: 0, name: ">> Select" },
+                { key: 1, name: "Toyota" },
+                { key: 2, name: "Honda" },
+                { key: 3, name: "Nissan" }
             ]
         }
       },
@@ -102,19 +126,13 @@ export class AppComponent  {
         field: 'model',
         type: 'selectColumn',
         editable: true,
-        valueFormatter: (params) => {
-          return this.carModels.filter((carModel) => {
-            return carModel.key === params.value;
-          })[0].name;
-        },
-        cellEditorParams: (params) => {
-            const returnParams = {
-              values: this.carModels.map((carModel) => {
-                return carModel.key;
-              })
-            };
-
-            return returnParams;
+        cellEditorParams: {
+          values: [
+              { key: 0, name: ">> Select" },
+              { key: 1, name: "Corolla" },
+              { key: 2, name: "Civic" },
+              { key: 3, name: "Sentra" }
+          ]
         }
       },
       {
@@ -142,9 +160,9 @@ export class AppComponent  {
     ];
 
     rowData = [
-        { make: 'Toyota', model: 1, price: 35000, saleEndDate: new Date(), usedIndicator: 'Y' },
-        { make: 'Honda', model: 2, price: 32000, saleEndDate: new Date(), usedIndicator: 'N' },
-        { make: 'Nissan', model: 3, price: 72000, saleEndDate: new Date(), usedIndicator: 'Y' }
+        { make: 1, model: 1, price: 35000, saleEndDate: new Date(), usedIndicator: 'Y' },
+        { make: 2, model: 2, price: 32000, saleEndDate: new Date(), usedIndicator: 'N' },
+        { make: 3, model: 3, price: 72000, saleEndDate: new Date(), usedIndicator: 'Y' }
     ];
 
     pinnedRowData = [
