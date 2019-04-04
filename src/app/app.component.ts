@@ -52,34 +52,39 @@ export class AppComponent  {
       'selectColumn': {
         cellEditor: 'agRichSelectCellEditor',
         valueFormatter: (params) => {
+          if (params.node.isRowPinned()) {
+            return params.value;
+          }
           const currentColDef = params.colDef;
           let editorParams = null;
-          if (currentColDef !== undefined || currentColDef !== null) {
+          if (currentColDef !== undefined && currentColDef !== null) {
             editorParams = currentColDef.cellEditorParams;
           }
           const dropDownItems = (editorParams ? (editorParams.values ? editorParams.values : []) : []);
           const item = dropDownItems.filter((dropDownItem) => {
-            return dropDownItem.key === params.value;
+            return dropDownItem.value === params.value;
           })[0];
           if (item) {
             return item.name;
           }
           return '';
         },
-        valueParser: (params) => {
-          const currentColDef = params.colDef;
-          let editorParams = null;
-          if (currentColDef !== undefined || currentColDef !== null) {
-            editorParams = currentColDef.cellEditorParams;
-          }
-          const dropDownItems = (editorParams ? (editorParams.values ? editorParams.values : []) : []);
-          const returnParams = {
-            values: dropDownItems.map((dropDownItem) => {
-              return (dropDownItem.key ? dropDownItem.key : dropDownItem);
-            })
-          };
-          return returnParams;
-        }
+        // valueParser: (params) => {
+        //   if (params.node.isRowPinned()) {
+        //     return params.newValue;
+        //   }
+        //   const currentColDef = params.colDef;
+        //   let editorParams = null;
+        //   if (currentColDef !== undefined && currentColDef !== null) {
+        //     editorParams = currentColDef.cellEditorParams;
+        //   }
+        //   console.log(params.newValue);
+        //   const dropDownItems = (editorParams ? (editorParams.dropDownData ? editorParams.dropDownData : []) : []);
+        //   const item = dropDownItems.filter((dropDownItem) => {
+        //       return dropDownItem.name === params.newValue;
+        //     })[0];
+        //   return (item ? item.key : '' );
+        // }
       },
       'amountColumn': {
         cellEditorFramework: AmountEditorComponent,
@@ -104,6 +109,25 @@ export class AppComponent  {
     }
   }
 
+  getDropDownValues = (dropDownItems) => {
+    return dropDownItems.map((dropDownItem) => {
+      return dropDownItem.name;
+    })
+  }
+
+  dropDownDataMake = [
+    { value: 0, name: ">> Select" },
+    { value: 1, name: "Toyota" },
+    { value: 2, name: "Honda" },
+    { value: 3, name: "Nissan" }
+  ];
+  dropDownDataModel = [
+    { value: 0, name: ">> Select" },
+    { value: 1, name: "Corolla" },
+    { value: 2, name: "Civic" },
+    { value: 3, name: "Sentra" }
+  ];
+
   columnDefs = [
       {
         headerName: 'Make',
@@ -113,12 +137,7 @@ export class AppComponent  {
           return !params.node.isRowPinned();
         },
         cellEditorParams: {
-            values: [
-                { key: 0, name: ">> Select" },
-                { key: 1, name: "Toyota" },
-                { key: 2, name: "Honda" },
-                { key: 3, name: "Nissan" }
-            ]
+          values: this.dropDownDataMake
         }
       },
       {
@@ -127,12 +146,7 @@ export class AppComponent  {
         type: 'selectColumn',
         editable: true,
         cellEditorParams: {
-          values: [
-              { key: 0, name: ">> Select" },
-              { key: 1, name: "Corolla" },
-              { key: 2, name: "Civic" },
-              { key: 3, name: "Sentra" }
-          ]
+          values: this.dropDownDataModel
         }
       },
       {
