@@ -69,6 +69,25 @@ export class AppComponent  {
           }
           return '';
         },
+        cellEditorParams: (params) => {
+          const currentColDef = params.colDef;
+          let columnRefData = null;
+          if (currentColDef !== undefined && currentColDef !== null) {
+            columnRefData = currentColDef.refData;
+          }
+
+          if (!columnRefData) {
+            return {
+              values:[]
+            };
+          }
+          
+          return {
+            values: columnRefData.map((carModel) => {
+              return carModel.key;
+            })
+          };
+        }
         // valueParser: (params) => {
         //   if (params.node.isRowPinned()) {
         //     return params.newValue;
