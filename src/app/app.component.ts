@@ -107,6 +107,7 @@ export class AppComponent  {
       },
       'amountColumn': {
         cellEditorFramework: AmountEditorComponent,
+        tooltipComponent: '',
         cellStyle: {
           textAlign: 'right'
         },
