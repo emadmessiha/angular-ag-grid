@@ -7,9 +7,7 @@ import { formatNumber } from '@angular/common';
 @Component({
     selector: 'amount-editor',
     template: `
-    <input placement="bottom"
-        ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on bottom" [autoClose]="false" triggers="manual" #p="ngbPopover"
-    #input type="number" [class]="cssClass" (keyup)="onKeyUp($event, p)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;" autocomplete="off">`
+    <input #input type="number" [class]="cssClass" (keyup)="onKeyUp($event, p)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;" autocomplete="off">`
 })
 export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewInit {
     private params: any;
