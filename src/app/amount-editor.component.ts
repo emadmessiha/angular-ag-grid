@@ -3,9 +3,13 @@ import { AbstractControl, FormControl, ValidatorFn } from '@angular/forms';
 import { ICellEditorAngularComp } from "ag-grid-angular";
 import { formatNumber } from '@angular/common';
 // https://ng-bootstrap.github.io/#/components/tooltip/examples
+// https://ng-bootstrap.github.io/#/components/popover/examples
 @Component({
     selector: 'amount-editor',
-    template: `<input #input type="number" [class]="cssClass" (keyup)="onKeyUp($event)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;" autocomplete="off">`
+    template: `
+    <input placement="bottom"
+        ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on bottom" [autoClose]="false" triggers="manual" #p="ngbPopover"
+    #input type="number" [class]="cssClass" (keyup)="onKeyUp($event, p)" [(ngModel)]="value" style="width: 100%; border: none; height: 100%; text-align: right;" autocomplete="off">`
 })
 export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewInit {
     private params: any;
@@ -43,7 +47,8 @@ export class AmountEditorComponent implements ICellEditorAngularComp, AfterViewI
       return true;
     }
 
-    onKeyUp(event): void {
+    onKeyUp(event, p): void {
+      p.open();
       const nativeElement = this.input.element.nativeElement;
       const numberValue: string = this.input.element.nativeElement.value;
       
