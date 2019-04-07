@@ -5,6 +5,7 @@
 <p>
   Test tooltop (enter the word 'test' to trigger the tooltip):
   <input #tooltipInput triggers="manual" autoClose="false" placement="top" ngbTooltip="tooltipContent" #tt="ngbTooltip" (keyup)="onKeyUp($event, tt)" autocomplete="off"/>
+  <tooltip [for]="tooltipInput" message="This is a proof of concept for a simple tool tip"></tooltip>
 </p>
 <p>
   <button type="button" class="btn btn-outline-secondary mr-2" ngbPopover="What a great tip!" [autoClose]="false" triggers="manual" #p="ngbPopover" (click)="p.open()" popoverTitle="Pop title">

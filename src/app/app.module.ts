@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { HelloComponent } from './hello.component';
 import { AgGridModule } from 'ag-grid-angular';
 import { AmountEditorComponent } from './amount-editor.component';
+import { TooltipComponent } from './tooltip.component';
 import 'ag-grid-enterprise';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -22,7 +23,8 @@ export class NgbdTooltipTriggersModule {}
   declarations: [
     AppComponent,
     HelloComponent,
-    AmountEditorComponent
+    AmountEditorComponent,
+    TooltipComponent
   ],
   bootstrap: [
     AppComponent
